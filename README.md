@@ -1,67 +1,69 @@
+
+
+Readme · MD
 # Active Directory + Microsoft Defender + Sentinel Lab
-
-This repository documents a cloud-hosted Active Directory environment, built to gain hands-on experience with Microsoft's security stack: Defender for Endpoint and Microsoft Sentinel, using KQL for detection engineering.
-
-The lab consists of a Windows Server domain controller and a domain-joined client, both hosted on Azure, onboarded to Microsoft Defender for Endpoint, with detections investigated and built out in Microsoft Sentinel.
-
+ 
+This repository documents a cloud hosted Active Directory environment, built to gain hands on experience with Microsoft's security stack: Defender for Endpoint and Microsoft Sentinel, using KQL for detection engineering.
+ 
+The lab currently consists of a Windows Server domain controller and a second Windows Server machine joined to its domain, both running in Azure. As the project grows, I plan to onboard both machines to Microsoft Defender for Endpoint and build detections in Microsoft Sentinel.
+ 
 ## Current Lab
-
-- Azure (free tier virtual machines)
-- Windows Server — Active Directory Domain Services
-- Windows client, domain-joined
-- Microsoft Defender for Endpoint
-- Microsoft Sentinel
-- KQL (Kusto Query Language)
-
+ 
+- Azure (free account, East US)
+- Windows Server, Active Directory Domain Services
+- Second Windows Server machine, joined to the domain
+- Microsoft Defender for Endpoint (planned)
+- Microsoft Sentinel (planned)
+- KQL, Kusto Query Language (planned)
 ## Architecture
-
-*(architecture diagram once the domain is built)*
-
+ 
+<!-- ![Architecture diagram](architecture/ad-lab-architecture.png) -->
+ 
 ## Documentation
-
-*(setup writeup once the DC and client are deployed)*
-
+ 
+- [Setup Guide](docs/setup.md) — deploying the domain controller, building the domain, and joining the second machine
 ## Detections
-
+ 
 - Account Lockout Monitoring — IT operations focused
 - GPO Change Monitoring — IT operations focused
 - Kerberoasting — T1558.003, cybersecurity focused, built out as a Sentinel analytics rule
-
 ## Current Progress
-
-- [ ] Deploy Domain Controller VM
-- [ ] Deploy domain-joined client VM
-- [ ] Onboard both to Microsoft Defender for Endpoint
+ 
+- [x] Deploy domain controller VM
+- [x] Configure Active Directory Domain Services
+- [x] Create test accounts
+- [x] Deploy second machine and join it to the domain
+- [ ] Onboard both machines to Microsoft Defender for Endpoint
 - [ ] Account lockout detection
 - [ ] GPO change detection
 - [ ] Kerberoasting detection
 - [ ] Connect to Microsoft Sentinel
 - [ ] Build Sentinel analytics rule and triage a real incident
-
 ## Repository Structure
-
+ 
 ```
 architecture/     diagram source and exported image, once built
-docs/             setup guide and any troubleshooting writeups
-detections/       one subfolder per detection, each with its query, writeup, and screenshots
+docs/             setup guide, troubleshooting, and investigation writeups
+screenshots/      raw evidence referenced from docs, organized by topic
+  setup/
+detections/       one subfolder per detection, each with its query, writeup, and screenshots, once built
 ```
-
+ 
 ## Roadmap
-
+ 
 ### Phase 1
-- Deploy Domain Controller and client VMs in Azure
-- Configure Active Directory Domain Services
-- Onboard both machines to Microsoft Defender for Endpoint
-
+- [x] Deploy the domain controller and a second machine in Azure
+- [x] Configure Active Directory Domain Services
+- [ ] Onboard both machines to Microsoft Defender for Endpoint
 ### Phase 2
-- Account lockout detection
-- GPO change detection
-
+- [ ] Account lockout detection
+- [ ] GPO change detection
 ### Phase 3
-- Kerberoasting detection
-- Connect Defender data to Microsoft Sentinel
-- Build a Sentinel analytics rule and triage a real incident
-
+- [ ] Kerberoasting detection
+- [ ] Connect Defender data to Microsoft Sentinel
+- [ ] Build a Sentinel analytics rule and triage a real incident
 ## Related Projects
+ 
+- [Splunk + Sysmon Detection Lab](https://github.com/sramzi123/splunk-sysmon-detection-lab) — an earlier, on prem style SOC lab covering Windows Event Logs, Sysmon, and SPL based detection engineering
+ 
 
-- [Splunk + Sysmon Detection Lab](https://github.com/sramzi123/splunk-sysmon-detection-lab) — an earlier, on-prem style SOC lab covering Windows Event Logs, Sysmon, and SPL-based detection engineering
