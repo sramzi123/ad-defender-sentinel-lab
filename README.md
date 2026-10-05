@@ -21,7 +21,7 @@ The lab currently consists of a Windows Server domain controller and a second Wi
 - [Setup Guide](docs/setup.md) — deploying the domain controller, building the domain, and joining the second machine
 ## Detections
  
-- Account Lockout Monitoring — IT operations focused
+- [Account Lockout Monitoring](detections/account-lockout-monitoring/account-lockout-monitoring.md) — IT operations focused, event 4740
 - GPO Change Monitoring — IT operations focused
 - Kerberoasting — T1558.003, cybersecurity focused, built out as a Sentinel analytics rule
 ## Current Progress
@@ -31,7 +31,7 @@ The lab currently consists of a Windows Server domain controller and a second Wi
 - [x] Create test accounts
 - [x] Deploy second machine and join it to the domain
 - [ ] Onboard both machines to Microsoft Defender for Endpoint (optional, pending licensing)
-- [ ] Account lockout detection
+- [x] Account lockout detection
 - [ ] GPO change detection
 - [ ] Kerberoasting detection
 - [x] Connect to Microsoft Sentinel
@@ -43,7 +43,8 @@ architecture/     diagram source and exported image, once built
 docs/             setup guide, troubleshooting, and investigation writeups
 screenshots/      raw evidence referenced from docs, organized by topic
   setup/
-detections/       one subfolder per detection, each with its query, writeup, and screenshots, once built
+detections/       one subfolder per detection, each with its query, writeup, and screenshots
+  account-lockout-monitoring/
 ```
  
 ## Roadmap
@@ -54,7 +55,7 @@ detections/       one subfolder per detection, each with its query, writeup, and
 - [x] Connect Security events from both machines to Microsoft Sentinel
 - [ ] Onboard both machines to Microsoft Defender for Endpoint (optional, pending licensing)
 ### Phase 2
-- [ ] Account lockout detection
+- [x] Account lockout detection
 - [ ] GPO change detection
 ### Phase 3
 - [ ] Kerberoasting detection
