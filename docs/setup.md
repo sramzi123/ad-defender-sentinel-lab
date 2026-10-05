@@ -103,6 +103,26 @@ Get-ADComputer -Filter * | Select-Object Name, DNSHostName
  
 ![Domain controller listing both machines](../screenshots/setup/setup-07-dc-sees-client.png)
  
+## 8. Send Security events to Microsoft Sentinel
+ 
+The domain generates the events, but the detections need somewhere to collect and query them. This is the same job the forwarder and indexer did in my Splunk lab. I could not reuse that Splunk instance here because it runs on my laptop, and I did not want to open a port to the internet just so cloud VMs could reach it.
+ 
+I created a Log Analytics workspace, `homelab-law`, in the same resource group and region as the VMs, then enabled Microsoft Sentinel on it. That also starts Sentinel's 31 day free trial. Sentinel may redirect you to the Defender portal, which is expected, since Microsoft is moving it there.
+ 
+To connect the machines, I installed the Windows Security Events solution from the Content hub, opened the Windows Security Events via AMA connector, and created a data collection rule covering both `homelab-dc` and `homelab-client`. Creating the rule installs the Azure Monitor Agent on each VM, so both have to be running. I chose All Security Events over the Common set because I was not sure Common includes event 5136, which a GPO change detection needs. Two small VMs stay far below the 10 GB a day free allowance.
+ 
+I did not trust the connection until data actually arrived. In the Logs page (switched to KQL mode, since Simple mode hides the editor), I ran:
+ 
+```kusto
+SecurityEvent
+| summarize count() by Computer, EventID
+| sort by count_ desc
+```
+ 
+![Both machines reporting Security events to Sentinel](../screenshots/setup/setup-08-sentinel-ingestion-verified.png)
+ 
+Both `homelab-dc.homelab.local` and `homelab-client.homelab.local` showed up, including event 4769, the Kerberos service ticket event the Kerberoasting detection depends on. Events that nothing has triggered yet, like 4740 for account lockouts, were absent, which is expected.
+ 
 ## Result
  
-A working Active Directory domain in Azure with a domain controller, a joined member machine, and test accounts, ready for Defender for Endpoint onboarding and the first detections.
+A working Active Directory domain in Azure with a domain controller, a joined member machine, and test accounts, with Security events from both machines flowing into Microsoft Sentinel and ready for the first detections.
