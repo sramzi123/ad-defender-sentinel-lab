@@ -2,7 +2,7 @@
 
 ## Why this one
 
-Of the three detections planned for this lab, this is the one that speaks most to IT work. Lockouts are one of the most common tickets in any Active Directory environment, usually a forgotten password and occasionally something worse. I wanted to be able to answer the two questions a help desk or SOC person asks first: who got locked out, and from which machine.
+Account lockouts sit right on the line between IT and security. For a help desk, a lockout is one of the most common tickets in an Active Directory environment, usually a forgotten password. For a SOC, the same event can be the first visible sign of password guessing or spraying, which is why lockouts are a common input for SIEM alerting. I wanted to answer the two questions both teams ask first: who got locked out, and from which machine.
 
 ## Making lockouts possible
 
