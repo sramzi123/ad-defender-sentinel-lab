@@ -1,0 +1,15 @@
+// Detection: Account Lockout Monitoring
+// Focus: IT operations
+// ATT&CK: T1110 (Brute Force), related only. A lockout alone is not evidence of an attack.
+// Description: Lists account lockouts (event 4740) recorded on the domain controller,
+// showing which account was locked and which machine the bad attempts came from.
+// Notes:
+//  - In a 4740 event, TargetDomainName holds the caller computer, not a domain.
+//    It is renamed CallerComputer here so the output says what it means.
+//  - Requires an account lockout threshold on the domain. The default is 0, which never locks.
+//  - Sentinel displays time in UTC.
+
+SecurityEvent
+| where EventID == 4740
+| project TimeGenerated, LockedAccount = TargetUserName, CallerComputer = TargetDomainName, DomainController = Computer
+| sort by TimeGenerated desc
