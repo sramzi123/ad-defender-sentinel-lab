@@ -1,5 +1,5 @@
 // Detection: Account Lockout Monitoring
-// Focus: IT operations
+// Focus: IT operations and security triage
 // ATT&CK: T1110 (Brute Force), related only. A lockout alone is not evidence of an attack.
 // Description: Lists account lockouts (event 4740) recorded on the domain controller,
 // showing which account was locked and which machine the bad attempts came from.
