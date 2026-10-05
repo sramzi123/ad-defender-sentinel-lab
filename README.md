@@ -1,11 +1,8 @@
-
-
-Readme · MD
 # Active Directory + Microsoft Defender + Sentinel Lab
  
 This repository documents a cloud hosted Active Directory environment, built to gain hands on experience with Microsoft's security stack: Defender for Endpoint and Microsoft Sentinel, using KQL for detection engineering.
  
-The lab currently consists of a Windows Server domain controller and a second Windows Server machine joined to its domain, both running in Azure. As the project grows, I plan to onboard both machines to Microsoft Defender for Endpoint and build detections in Microsoft Sentinel.
+The lab currently consists of a Windows Server domain controller and a second Windows Server machine joined to its domain, both running in Azure. Security events from both machines flow into Microsoft Sentinel. As the project grows, I plan to build detections in KQL and, if licensing allows, onboard both machines to Microsoft Defender for Endpoint.
  
 ## Current Lab
  
@@ -13,8 +10,8 @@ The lab currently consists of a Windows Server domain controller and a second Wi
 - Windows Server, Active Directory Domain Services
 - Second Windows Server machine, joined to the domain
 - Microsoft Defender for Endpoint (planned)
-- Microsoft Sentinel (planned)
-- KQL, Kusto Query Language (planned)
+- Microsoft Sentinel, fed by the Azure Monitor Agent
+- KQL, Kusto Query Language
 ## Architecture
  
 <!-- ![Architecture diagram](architecture/ad-lab-architecture.png) -->
@@ -33,11 +30,11 @@ The lab currently consists of a Windows Server domain controller and a second Wi
 - [x] Configure Active Directory Domain Services
 - [x] Create test accounts
 - [x] Deploy second machine and join it to the domain
-- [ ] Onboard both machines to Microsoft Defender for Endpoint
+- [ ] Onboard both machines to Microsoft Defender for Endpoint (optional, pending licensing)
 - [ ] Account lockout detection
 - [ ] GPO change detection
 - [ ] Kerberoasting detection
-- [ ] Connect to Microsoft Sentinel
+- [x] Connect to Microsoft Sentinel
 - [ ] Build Sentinel analytics rule and triage a real incident
 ## Repository Structure
  
@@ -54,16 +51,15 @@ detections/       one subfolder per detection, each with its query, writeup, and
 ### Phase 1
 - [x] Deploy the domain controller and a second machine in Azure
 - [x] Configure Active Directory Domain Services
-- [ ] Onboard both machines to Microsoft Defender for Endpoint
+- [x] Connect Security events from both machines to Microsoft Sentinel
+- [ ] Onboard both machines to Microsoft Defender for Endpoint (optional, pending licensing)
 ### Phase 2
 - [ ] Account lockout detection
 - [ ] GPO change detection
 ### Phase 3
 - [ ] Kerberoasting detection
-- [ ] Connect Defender data to Microsoft Sentinel
+- [x] Connect Security events to Microsoft Sentinel
 - [ ] Build a Sentinel analytics rule and triage a real incident
 ## Related Projects
  
 - [Splunk + Sysmon Detection Lab](https://github.com/sramzi123/splunk-sysmon-detection-lab) — an earlier, on prem style SOC lab covering Windows Event Logs, Sysmon, and SPL based detection engineering
- 
-
