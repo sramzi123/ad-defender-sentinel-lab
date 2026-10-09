@@ -1,0 +1,19 @@
+// Detection: Possible Kerberoasting (RC4 service ticket request)
+// Focus: Security
+// ATT&CK: T1558.003 (Steal or Forge Kerberos Tickets: Kerberoasting)
+// Description: Finds Kerberos service ticket requests (event 4769) that used RC4 encryption (0x17),
+//   skipping computer accounts and krbtgt. RC4 tickets are much easier to crack offline than AES.
+// Notes:
+//  - The SecurityEvent table had no TicketEncryptionType column for me, so the values are pulled
+//    out of the raw EventData XML with extract().
+//  - Only catches RC4. A request that comes back AES (0x12) will not match.
+//  - TimeGenerated is UTC.
+SecurityEvent
+| where EventID == 4769
+| extend TicketEncryption = extract(@'Name="TicketEncryptionType">([^<]+)<', 1, EventData),
+         Service = extract(@'Name="ServiceName">([^<]+)<', 1, EventData),
+         RequestingAccount = extract(@'Name="TargetUserName">([^<]+)<', 1, EventData),
+         SourceIP = extract(@'Name="IpAddress">([^<]+)<', 1, EventData)
+| where TicketEncryption == "0x17"
+| where Service !endswith "$" and Service != "krbtgt"
+| project TimeGenerated, RequestingAccount, Service, TicketEncryption, SourceIP
