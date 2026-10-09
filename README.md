@@ -23,7 +23,7 @@ The lab currently consists of a Windows Server domain controller and a second Wi
  
 - [Account Lockout Monitoring](detections/account-lockout-monitoring/account-lockout-monitoring.md) — IT operations focused, event 4740
 - GPO Change Monitoring — IT operations focused
-- Kerberoasting — T1558.003, cybersecurity focused, built out as a Sentinel analytics rule
+- [Kerberoasting](detections/kerberoasting/kerberoasting.md) — T1558.003, cybersecurity focused, built out as a Sentinel analytics rule
 ## Current Progress
  
 - [x] Deploy domain controller VM
@@ -33,9 +33,9 @@ The lab currently consists of a Windows Server domain controller and a second Wi
 - [ ] Onboard both machines to Microsoft Defender for Endpoint (optional, pending licensing)
 - [x] Account lockout detection
 - [ ] GPO change detection
-- [ ] Kerberoasting detection
+- [x] Kerberoasting detection
 - [x] Connect to Microsoft Sentinel
-- [ ] Build Sentinel analytics rule and triage a real incident
+- [x] Build Sentinel analytics rule and triage a real incident
 ## Repository Structure
  
 ```
@@ -45,6 +45,7 @@ screenshots/      raw evidence referenced from docs, organized by topic
   setup/
 detections/       one subfolder per detection, each with its query, writeup, and screenshots
   account-lockout-monitoring/
+  kerberoasting/
 ```
  
 ## Roadmap
@@ -58,9 +59,8 @@ detections/       one subfolder per detection, each with its query, writeup, and
 - [x] Account lockout detection
 - [ ] GPO change detection
 ### Phase 3
-- [ ] Kerberoasting detection
-- [x] Connect Security events to Microsoft Sentinel
-- [ ] Build a Sentinel analytics rule and triage a real incident
+- [x] Kerberoasting detection
+- [x] Build a Sentinel analytics rule and triage a real incident
 ## Related Projects
  
 - [Splunk + Sysmon Detection Lab](https://github.com/sramzi123/splunk-sysmon-detection-lab) — an earlier, on prem style SOC lab covering Windows Event Logs, Sysmon, and SPL based detection engineering
