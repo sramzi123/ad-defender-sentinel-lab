@@ -1,0 +1,24 @@
+// Detection: GPO Change Monitoring
+// Focus: IT operations and security triage
+// ATT&CK: T1484.001 (Domain Policy Modification: Group Policy Modification), related only.
+//   Most GPO edits are normal admin work, so a hit is not evidence of an attack on its own.
+// Description: Finds directory service object changes (event 5136) where a Group Policy object's
+//   versionNumber was added. AD bumps this number every time a GPO's settings are edited, so it
+//   gives one row per edit instead of one row per attribute that changed.
+// Notes:
+//  - Requires the "Directory Service Changes" audit subcategory, which is off by default.
+//  - The SecurityEvent table has no columns for these fields, so the values are pulled out of the
+//    raw EventData XML with extract().
+//  - OperationType is logged as a code. %%14674 means Value Added.
+//  - PolicyDN shows the GPO's GUID, not its name.
+//  - TimeGenerated is UTC.
+SecurityEvent
+| where EventID == 5136
+| extend ObjectClass = extract(@'Name="ObjectClass">([^<]+)<', 1, EventData),
+         Attribute = extract(@'Name="AttributeLDAPDisplayName">([^<]+)<', 1, EventData),
+         Operation = extract(@'Name="OperationType">([^<]+)<', 1, EventData),
+         PolicyDN = extract(@'Name="ObjectDN">([^<]+)<', 1, EventData),
+         ChangedBy = extract(@'Name="SubjectUserName">([^<]+)<', 1, EventData)
+| where ObjectClass == "groupPolicyContainer" and Attribute == "versionNumber" and Operation == "%%14674"
+| project TimeGenerated, ChangedBy, PolicyDN, DomainController = Computer
+| sort by TimeGenerated desc
